@@ -5,7 +5,7 @@
 using namespace std;
 using namespace std::chrono;
 
-// funcion para leer una matriz desde un archivo
+// función para leer una matriz desde un archivo
 void leer_matriz(const string& nombre_archivo, vector<vector<int>>& matriz, int filas, int columnas) {
     ifstream archivo(nombre_archivo);
     if (!archivo.is_open()) {
@@ -21,7 +21,17 @@ void leer_matriz(const string& nombre_archivo, vector<vector<int>>& matriz, int 
     archivo.close();
 }
 
-// funcion para transponer una matriz
+// función para imprimir una matriz
+void imprimir_matriz(const vector<vector<int>>& matriz, int filas, int columnas) {
+    for (int i = 0; i < filas; ++i) {
+        for (int j = 0; j < columnas; ++j) {
+            cout << matriz[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+// función para transponer una matriz
 void transponer_matriz(const vector<vector<int>>& mat, vector<vector<int>>& mat_transpuesta, int filas, int columnas) {
     for (int i = 0; i < filas; ++i) {
         for (int j = 0; j < columnas; ++j) {
@@ -30,7 +40,7 @@ void transponer_matriz(const vector<vector<int>>& mat, vector<vector<int>>& mat_
     }
 }
 
-// funcion para multiplicar dos matrices utilizando la transpuesta de la segunda
+// función para multiplicar dos matrices utilizando la transpuesta de la segunda
 void multiplicar_matrices_optimizada(const vector<vector<int>>& mat1, const vector<vector<int>>& mat2_transpuesta, vector<vector<int>>& resultado, int R1, int C1, int C2) {
     for (int i = 0; i < R1; i++) {
         for (int j = 0; j < C2; j++) {
@@ -42,13 +52,13 @@ void multiplicar_matrices_optimizada(const vector<vector<int>>& mat1, const vect
     }
 }
 
-// funcion para medir el tiempo de ejecucion de la multiplicacion optimizada
+// función para medir el tiempo de ejecución de la multiplicación optimizada
 long long medir_tiempo_multiplicacion_optimizada(const vector<vector<int>>& mat1, const vector<vector<int>>& mat2, vector<vector<int>>& resultado, int R1, int C1, int C2) {
     // transponer la segunda matriz
     vector<vector<int>> mat2_transpuesta(C2, vector<int>(C1));
     transponer_matriz(mat2, mat2_transpuesta, C1, C2);  
 
-    // medir el tiempo de la multiplicacion
+    // medir el tiempo de la multiplicación
     auto start = high_resolution_clock::now();
     
     multiplicar_matrices_optimizada(mat1, mat2_transpuesta, resultado, R1, C1, C2);
@@ -74,6 +84,10 @@ int main() {
     
     long long tiempo_cuadrada = medir_tiempo_multiplicacion_optimizada(mat1_cuadrada, mat2_cuadrada, resultado_cuadrada, R1, C1, C2);
     cout << "matriz cuadrada de 316x316 tardo: " << tiempo_cuadrada << " ms (optimizada)" << endl;
+    
+    // imprimir la matriz resultado cuadrada
+    cout << "Matriz resultado cuadrada:" << endl;
+    imprimir_matriz(resultado_cuadrada, R1, C2);
 
     // medir tiempo para matrices rectangulares de 500x200 y 200x500
     R1 = 500, C1 = 200;
@@ -87,6 +101,10 @@ int main() {
     
     long long tiempo_rectangular = medir_tiempo_multiplicacion_optimizada(mat1_rectangular, mat2_rectangular, resultado_rectangular, R1, C1, C2);
     cout << "matriz rectangular de 500x200 y 200x500 tardo: " << tiempo_rectangular << " ms (optimizada)" << endl;
+
+    // imprimir la matriz resultado rectangular
+    cout << "Matriz resultado rectangular:" << endl;
+    imprimir_matriz(resultado_rectangular, R1, C2);
 
     return 0;
 }
