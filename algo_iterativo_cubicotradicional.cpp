@@ -33,6 +33,16 @@ void multiplicar_matrices(const vector<vector<int>>& mat1, const vector<vector<i
     }
 }
 
+// funcion para imprimir una matriz
+void imprimir_matriz(const vector<vector<int>>& matriz, int filas, int columnas) {
+    for (int i = 0; i < filas; ++i) {
+        for (int j = 0; j < columnas; ++j) {
+            cout << matriz[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
 // funcion para medir el tiempo de ejecucion de la multiplicacion de matrices
 long long medir_tiempo_multiplicacion_matrices(const vector<vector<int>>& mat1, const vector<vector<int>>& mat2, vector<vector<int>>& resultado, int R1, int C1, int C2) {
     auto start = high_resolution_clock::now();
@@ -61,6 +71,9 @@ int main() {
     
     long long tiempo_cuadrada = medir_tiempo_multiplicacion_matrices(mat1_cuadrada, mat2_cuadrada, resultado_cuadrada, R1, C1, C2);
     cout << "matriz cuadrada de 316x316 tardo: " << tiempo_cuadrada << " ms" << endl;
+    
+    cout << "Matriz resultado cuadrada: " << endl;
+    imprimir_matriz(resultado_cuadrada, R1, C2);  // Imprimir la matriz resultante cuadrada
 
     // medir tiempo para matrices rectangulares de 500x200 y 200x500
     R1 = 500, C1 = 200;
@@ -74,6 +87,9 @@ int main() {
     
     long long tiempo_rectangular = medir_tiempo_multiplicacion_matrices(mat1_rectangular, mat2_rectangular, resultado_rectangular, R1, C1, C2);
     cout << "matriz rectangular de 500x200 y 200x500 tardo: " << tiempo_rectangular << " ms" << endl;
+    
+    cout << "Matriz resultado rectangular: " << endl;
+    imprimir_matriz(resultado_rectangular, R1, C2);  // Imprimir la matriz resultante rectangular
 
     return 0;
 }
